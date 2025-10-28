@@ -41,7 +41,6 @@ RUN apt-get update \
   && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /app/media /app/static \
-  && chown -R saleor:saleor /app/
 
 COPY --from=build-python /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
 COPY --from=build-python /usr/local/bin/ /usr/local/bin/
@@ -51,6 +50,7 @@ WORKDIR /app
 ARG STATIC_URL
 ENV STATIC_URL=${STATIC_URL:-/static/}
 RUN SECRET_KEY=dummy STATIC_URL=${STATIC_URL} python3 manage.py collectstatic --no-input
+RUN chown -R saleor:saleor /app
 
 EXPOSE 8000
 ENV PYTHONUNBUFFERED=1
