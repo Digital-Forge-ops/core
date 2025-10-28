@@ -40,7 +40,7 @@ RUN apt-get update \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /app/media /app/static \
+RUN mkdir -p /app/media /app/static
 
 COPY --from=build-python /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
 COPY --from=build-python /usr/local/bin/ /usr/local/bin/
